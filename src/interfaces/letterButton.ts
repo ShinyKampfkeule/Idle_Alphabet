@@ -17,14 +17,14 @@ interface LetterInterface {
     production_speed_upgrades: LetterUpgradeInterface
 }
 
-interface LetterUpgradeInterface {
+export interface LetterUpgradeInterface {
     [key: number]: {
         costs: UpgradeCostsInterface
         newValue: number
     }
 }
 
-interface UpgradeCostsInterface {
+export interface UpgradeCostsInterface {
     [key: string]: number
 }
 

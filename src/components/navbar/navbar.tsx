@@ -4,6 +4,7 @@ import {useAtomValue} from "jotai/index";
 import {colorsAtom} from "../../atoms/colors";
 import {useAtom} from "jotai";
 import {activeTabAtom} from "../../atoms/activeTab";
+import Upgrades from "./upgrades/upgrades";
 
 export default function GameNavbar() {
     const colors = useAtomValue(colorsAtom)
@@ -72,8 +73,11 @@ export default function GameNavbar() {
                 !!!</Flex></Tabs.Panel>
             <Tabs.Panel value="Settings"><Flex align="center" justify="center" h="20%">Settings COMING SOON
                 !!!</Flex></Tabs.Panel>
-            <Tabs.Panel value="Upgrades"><Flex align="center" justify="center" h="20%">Upgrades COMING SOON
-                !!!</Flex></Tabs.Panel>
+            <Tabs.Panel value="Upgrades">
+                <Flex align="center" justify="center" h="20%">
+                    <Upgrades/>
+                </Flex>
+            </Tabs.Panel>
         </Tabs>
     )
 }

@@ -40,7 +40,7 @@ export default function UnboughtButtonUnbuyable({letter}: LetterButtonLetterInte
                         : Object.keys(buyingCosts).map((key) => {
                             return <Text
                                 key={key}
-                                size=".9rem">{`${letters[key].amount > 999999 ? changeNumberDisplay(letters[key].amount, suffixes) : letters[key].amount}/${buyingCosts[key] > 999999 ? changeNumberDisplay(buyingCosts[key], suffixes) : buyingCosts[key]} - ${key}`}
+                                size=".9rem">{`${letters[key].amount > 999999 ? changeNumberDisplay(Math.round(letters[key].amount), suffixes) : letters[key].amount}/${buyingCosts[key] > 999999 ? changeNumberDisplay(buyingCosts[key], suffixes) : buyingCosts[key]} - ${key}`}
                             </Text>
                         })
                 }
