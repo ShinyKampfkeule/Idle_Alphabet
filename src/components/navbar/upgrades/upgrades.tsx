@@ -11,7 +11,7 @@ export default function Upgrades() {
     const letters = useAtomValue(lettersAtom)
     const suffixes = useAtomValue(suffixesAtom)
 
-    // console.log(Math.round(letters[activeLetter].production_rate * (1 / letters[activeLetter].production_speed)))
+    // console.log(Math.round(letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed)))
 
     return (
         <>
@@ -44,17 +44,17 @@ export default function Upgrades() {
                             </Title>
                             <Text>
                                 {
-                                    letters[activeLetter].production_rate * (1 / letters[activeLetter].production_speed) > 999999
+                                    letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed) > 999999
                                         ?
-                                        changeNumberDisplay(letters[activeLetter].production_rate * (1 / letters[activeLetter].production_speed), suffixes)
+                                        changeNumberDisplay(letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed), suffixes)
                                         :
-                                        formatNumber(letters[activeLetter].production_rate * (1 / letters[activeLetter].production_speed))
+                                        formatNumber(letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed))
                                 } Letters / Second
                             </Text>
                             <UpgradeButton upgrade="Increase Production Speed" letter={activeLetter}/>
                             <UpgradeButton upgrade="Increase Production Rate" letter={activeLetter}/>
                             {
-                                !letters[activeLetter].automated_production
+                                !letters[activeLetter].automatedProduction
                                     ? <UpgradeButton upgrade="Automate Production" letter={activeLetter}/>
                                     : <></>
                             }

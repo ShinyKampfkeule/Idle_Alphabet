@@ -1,4 +1,4 @@
-import {ActionIcon, Button, createStyles, Flex, keyframes, Text, Tooltip} from "@mantine/core";
+import {ActionIcon, Button, Flex, Text, Tooltip} from "@mantine/core";
 import {IconArrowBigUp} from "@tabler/icons-react";
 import LetterButtonInterface, {LetterButtonLetterInterface} from "../../../interfaces/letterButton";
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
@@ -9,6 +9,7 @@ import {suffixesAtom} from "../../../atoms/suffixes";
 import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 import {activeTabAtom} from "../../../atoms/activeTab";
 import {activeLetterAtom} from "../../../atoms/upgradeLetter";
+import findLevelCap from "../../../functions/findLevelCap";
 
 export default function ActiveButton({letter}: LetterButtonLetterInterface) {
     const colors = useAtomValue(colorsAtom)
@@ -19,45 +20,45 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
 
     const [isIntervalRunning, setIsIntervalRunning] = useState(false)
 
-    const borderFill = keyframes({
-        "0%": {
-            borderBottomWidth: 0
-        },
-        "100%": {
-            borderBottomWidth: "100%"
-        }
-    })
+    // const borderFill = keyframes({
+    //     "0%": {
+    //         borderBottomWidth: 0
+    //     },
+    //     "100%": {
+    //         borderBottomWidth: "100%"
+    //     }
+    // })
 
-    const useStyles = createStyles((theme) => ({
-        animatedButton: {
-            position: "relative",
-            overflow: "hidden",
-            border: "2px solid #F3G5H7",
-            borderRadius: "4px",
-            padding: "10px",
-            backgroundColor: "transparent",
-            color: "#000",
-            fontSize: "16px",
-            transition: `$border-color 0.5s`,
-            '&.active': {
-                borderColor: "#F3G5H7",
-                animation: `${borderFill} 1s ease-in-out`
-            }
-        },
-    }))
-
-    const {classes} = useStyles()
+    // const useStyles = createStyles((theme) => ({
+    //     animatedButton: {
+    //         position: "relative",
+    //         overflow: "hidden",
+    //         border: "2px solid #F3G5H7",
+    //         borderRadius: "4px",
+    //         padding: "10px",
+    //         backgroundColor: "transparent",
+    //         color: "#000",
+    //         fontSize: "16px",
+    //         transition: `$border-color 0.5s`,
+    //         '&.active': {
+    //             borderColor: "#F3G5H7",
+    //             animation: `${borderFill} 1s ease-in-out`
+    //         }
+    //     },
+    // }))
+    //
+    // const {classes} = useStyles()
 
     const handleButtonClick = () => {
         if (!isIntervalRunning) {
             setIsIntervalRunning(true)
             const interval = setInterval(() => {
                 const updatedLetters = Object.assign({}, letters)
-                updatedLetters[letter].amount += updatedLetters[letter].production_rate
+                updatedLetters[letter].amount += updatedLetters[letter].productionRate
                 setLetters(updatedLetters)
                 clearInterval(interval)
                 setIsIntervalRunning(false)
-            }, 1000 * letters[letter].production_speed)
+            }, 1000 * letters[letter].productionSpeed)
         }
     }
 
@@ -68,13 +69,13 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
 
     useEffect(() => {
         const intervalID = setInterval(() => {
-            if (letters[letter].automated_production) {
+            if (letters[letter].automatedProduction) {
                 setIsIntervalRunning(true)
                 const updatedLetters = Object.assign({}, letters)
-                updatedLetters[letter].amount += updatedLetters[letter].production_rate
+                updatedLetters[letter].amount += updatedLetters[letter].productionRate
                 setLetters(updatedLetters)
             }
-        }, 1000 * letters[letter].production_speed)
+        }, 1000 * letters[letter].productionSpeed)
 
         return () => {
             clearInterval(intervalID)
@@ -153,28 +154,50 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
 
 function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     let buyable = false
-    const production_rate_level = letters[letter].production_rate_level + 1
-    const production_speed_level = letters[letter].production_speed_level + 1
-    let production_rate_buyable = true
-    Object.keys(letters[letter].production_rate_upgrades[production_rate_level].costs).map((key) => {
-        if (letters[key].amount < letters[letter].production_rate_upgrades[production_rate_level].costs[key]) {
-            production_rate_buyable = false
-        }
-    })
-    if (production_rate_buyable) {
-        buyable = production_rate_buyable
+    const productionRateLevel = letters[letter].productionRateLevel + 1
+    const productionSpeedLevel = letters[letter].productionSpeedLevel + 1
+    let productionRateBuyable = true
+    const productionRateLevelCap = findLevelCap(productionRateLevel, letters[letter].productionRateUpgrades)
+    if (productionRateLevelCap && productionRateLevelCap.upgradeSlots) {
+        Object.keys(productionRateLevelCap.upgradeSlots).map((key) => {
+            if (productionRateLevelCap && productionRateLevelCap.upgradeSlots) {
+                let upgradeCosts
+                if (letters[letter].productionRateLevel === 0) {
+                    upgradeCosts = letters[letter].productionRateInitialCosts
+                } else {
+                    upgradeCosts = Math.round(letters[letter].productionRateInitialCosts * (letters[letter].productionRateLevel ^ letters[letter].productionRateLevel))
+                }
+                if (letters[productionRateLevelCap.upgradeSlots[key]].amount < upgradeCosts) {
+                    productionRateBuyable = false
+                }
+            }
+        })
     }
-    let production_speed_buyable = true
-    Object.keys(letters[letter].production_speed_upgrades[production_speed_level].costs).map((key) => {
-        if (letters[key].amount < letters[letter].production_speed_upgrades[production_speed_level].costs[key]) {
-            production_speed_buyable = false
-        }
-    })
-    if (production_speed_buyable) {
-        buyable = production_speed_buyable
+    if (productionRateBuyable) {
+        buyable = productionRateBuyable
     }
-    Object.keys(letters[letter].automated_production_costs).map((key) => {
-        if (letters[key].amount >= letters[letter].automated_production_costs[key]) {
+    let productionSpeedBuyable = true
+    const productionSpeedLevelCap = findLevelCap(productionSpeedLevel, letters[letter].productionSpeedUpgrades)
+    if (productionSpeedLevelCap && productionSpeedLevelCap.upgradeSlots) {
+        Object.keys(productionSpeedLevelCap.upgradeSlots).map((key) => {
+            if (productionSpeedLevelCap && productionSpeedLevelCap.upgradeSlots) {
+                let upgradeCosts
+                if (letters[letter].productionSpeedLevel === 0) {
+                    upgradeCosts = letters[letter].productionSpeedInitialCosts
+                } else {
+                    upgradeCosts = Math.round(letters[letter].productionSpeedInitialCosts * (letters[letter].productionSpeedLevel ^ letters[letter].productionSpeedLevel))
+                }
+                if (letters[productionSpeedLevelCap.upgradeSlots[key]].amount < upgradeCosts) {
+                    productionSpeedBuyable = false
+                }
+            }
+        })
+    }
+    if (productionSpeedBuyable) {
+        buyable = productionSpeedBuyable
+    }
+    Object.keys(letters[letter].automatedProductionCosts).map((key) => {
+        if (letters[key].amount >= letters[letter].automatedProductionCosts[key]) {
             buyable = true
         }
     })
