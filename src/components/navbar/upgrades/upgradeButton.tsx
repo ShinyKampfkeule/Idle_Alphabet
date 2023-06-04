@@ -97,7 +97,6 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
     }
 
     useEffect(() => {
-        console.log(letters[letter].productionSpeedLevel + 1)
         let automateUpgrades: UpgradeCostsInterface = {}
         const currentLevelCapSpeed = findLevelCap(letters[letter].productionSpeedLevel, letters[letter].productionSpeedUpgrades)
         const currentLevelCapRate = findLevelCap(letters[letter].productionRateLevel, letters[letter].productionRateUpgrades)
@@ -105,11 +104,24 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
         const levelCapRate = findLevelCap(letters[letter].productionRateLevel + 1, letters[letter].productionRateUpgrades)
         const newUpgradeCosts = Object.assign({}, upgradeCosts)
         let initalCosts = 0
+        let initialRate = 0
         switch (upgrade) {
             case 'Increase Production Speed':
                 setCurrentRate(`${letters[letter].productionSpeed} sec`)
                 if (levelCapSpeed && levelCapSpeed.upgradeSlots) {
-                    setNextRate(`${calculateDecreasingGrowth(levelCapSpeed.functionalityGrowthRate, letters[letter].productionSpeed, letters[letter].productionSpeedLevel)} sec`)
+                    console.log(levelCapSpeed.functionalityGrowthRate)
+                    console.log(letters[letter].productionInitSpeed)
+                    console.log(letters[letter].productionSpeedLevel)
+                    if (currentLevelCapSpeed && levelCapSpeed) {
+                        if (currentLevelCapSpeed.costsGrowthRate !== levelCapSpeed.costsGrowthRate) {
+                            initialRate = calculateDecreasingGrowth(
+                                currentLevelCapSpeed.functionalityGrowthRate, letters[letter].productionInitSpeed, letters[letter].productionSpeedLevel
+                            )
+                        } else {
+                            initialRate = letters[letter].productionSpeed
+                        }
+                    }
+                    setNextRate(`${calculateDecreasingGrowth(levelCapSpeed.functionalityGrowthRate, initialRate, letters[letter].productionSpeedLevel)} sec`)
                     Object.keys(levelCapSpeed.upgradeSlots).map((key) => {
                         if (levelCapSpeed && levelCapSpeed.upgradeSlots) {
                             if (!Object.keys(newUpgradeCosts).includes(key)) {
@@ -119,8 +131,6 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                                 }
                             }
                             if (currentLevelCapSpeed && levelCapSpeed) {
-                                console.log(currentLevelCapSpeed.costsGrowthRate)
-                                console.log(levelCapSpeed.costsGrowthRate)
                                 if (currentLevelCapSpeed.costsGrowthRate !== levelCapSpeed.costsGrowthRate) {
                                     initalCosts = Math.round(calculateIncreasingGrowth(
                                         currentLevelCapSpeed.costsGrowthRate, letters[letter].productionSpeedInitialCosts[key], letters[letter].productionSpeedLevel
@@ -129,14 +139,6 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                                     initalCosts = letters[letter].productionSpeedInitialCosts[key]
                                 }
                             }
-                            console.log(levelCapSpeed.costsGrowthRate)
-                            console.log(initalCosts)
-                            console.log(letters[letter].productionSpeedLevel)
-                            console.log(Math.round(calculateIncreasingGrowth(
-                                currentLevelCapSpeed.costsGrowthRate,
-                                letters[letter].productionSpeedInitialCosts[key],
-                                letters[letter].productionSpeedLevel + 1
-                            )))
                             newUpgradeCosts[key].costs = Math.round(calculateIncreasingGrowth(
                                 levelCapSpeed.costsGrowthRate,
                                 initalCosts,
