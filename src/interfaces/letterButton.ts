@@ -8,11 +8,13 @@ interface LetterInterface {
     buyingCosts?: UpgradeCostsInterface
     amount: number,
     productionRate: number,
+    productionInitRate: number,
     productionRateLevel: number,
-    productionRateInitialCosts: number,
+    productionRateInitialCosts: UpgradeSlotsInitialCostsInterface,
     productionSpeed: number,
+    productionInitSpeed: number,
     productionSpeedLevel: number,
-    productionSpeedInitialCosts: number,
+    productionSpeedInitialCosts: UpgradeSlotsInitialCostsInterface,
     automatedProduction: boolean,
     automatedProductionCosts: UpgradeCostsInterface,
     productionRateUpgrades: LetterUpgradeInterface
@@ -37,4 +39,8 @@ export interface LetterButtonLetterInterface {
 
 export interface UpgradeSlotsInterface {
     [key: string]: string
+}
+
+export interface UpgradeSlotsInitialCostsInterface {
+    [key: string]: number
 }

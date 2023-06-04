@@ -36,11 +36,12 @@ export default function Upgrades() {
                         ?
                         <>
                             <Title order={3}>
-                                {
-                                    letters[activeLetter].amount > 999999999
-                                        ? changeNumberDisplay(letters[activeLetter].amount, suffixes)
-                                        : formatNumber(letters[activeLetter].amount)
-                                }
+                                {formatNumber(letters[activeLetter].amount)}
+                                {/*{*/}
+                                {/*    letters[activeLetter].amount > 999999999*/}
+                                {/*        ? changeNumberDisplay(letters[activeLetter].amount, suffixes)*/}
+                                {/*        : formatNumber(letters[activeLetter].amount)*/}
+                                {/*}*/}
                             </Title>
                             <Text>
                                 {
