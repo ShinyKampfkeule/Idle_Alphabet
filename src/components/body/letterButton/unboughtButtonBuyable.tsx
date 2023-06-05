@@ -21,7 +21,9 @@ export default function UnboughtButtonBuyable({letter}: LetterButtonLetterInterf
             })
         }
         updatedLetters[letter].bought = true
-        updatedLetters[nextLetter].unlocked = true
+        if (letter !== 'D') {
+            updatedLetters[nextLetter].unlocked = true
+        }
         updatedLetters[letter].productionSpeedLevel += 1
         updatedLetters[letter].productionRateLevel += 1
         setLetters(updatedLetters)

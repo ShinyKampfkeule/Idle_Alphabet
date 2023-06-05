@@ -6,11 +6,11 @@ import {lettersAtom} from "../../../atoms/letters";
 import {useEffect, useState} from "react";
 import LetterButtonInterface, {UpgradeCostsInterface, UpgradeSlotsInterface} from "../../../interfaces/letterButton";
 import {suffixesAtom} from "../../../atoms/suffixes";
-import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 import {IconArrowBigUp} from "@tabler/icons-react";
 import CostsUpgradeInterface from "../../../interfaces/upgradeCosts";
 import findLevelCap from "../../../functions/findLevelCap";
 import {calculateDecreasingGrowth, calculateIncreasingGrowth} from "../../../functions/calculateGrowth";
+import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 
 export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface) {
     const colors = useAtomValue(colorsAtom)
@@ -22,7 +22,7 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
     const [upgradeCosts, setUpgradeCosts] = useState<CostsUpgradeInterface>({
         "slot1": {
             costs: 0,
-            letter: ""
+            letter: "A"
         }
     })
 
@@ -121,6 +121,7 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 })
                 break
         }
+        console.log(updatedLetters)
         setLetters(updatedLetters)
     }
 
@@ -130,7 +131,12 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
         const currentLevelCapRate = findLevelCap(letters[letter].productionRateLevel, letters[letter].productionRateUpgrades)
         const levelCapSpeed = findLevelCap(letters[letter].productionSpeedLevel + 1, letters[letter].productionSpeedUpgrades)
         const levelCapRate = findLevelCap(letters[letter].productionRateLevel + 1, letters[letter].productionRateUpgrades)
-        const newUpgradeCosts = Object.assign({}, upgradeCosts)
+        const newUpgradeCosts: CostsUpgradeInterface = {
+            "slot1": {
+                costs: 0,
+                letter: ""
+            }
+        }
         let initalCosts = 0
         let initialRate = 0
         switch (upgrade) {
@@ -324,21 +330,35 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                             : <></>
                     }
                 </Grid.Col>
-                {
-                    Object.keys(upgradeCosts).map((key) => {
-                        return (
-                            <Grid.Col span={3} key={key}>
-                                {
-                                    upgradeCosts[key].costs > 0
-                                        ?
-                                        <Text>{upgradeCosts[key].letter} {letters[upgradeCosts[key].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts[key].letter].amount), suffixes) : letters[upgradeCosts[key].letter].amount}/{upgradeCosts[key].costs > 10000 ? changeNumberDisplay(upgradeCosts[key].costs, suffixes) : upgradeCosts[key].costs}</Text>
-                                        : <Text></Text>
-                                }
-                            </Grid.Col>
-                        )
-                    })
-                }
-                <Grid.Col span={2}/>
+                <Grid.Col span={4} key='slot1'>
+                    {
+                        Object.keys(upgradeCosts).length >= 1 ?
+                            <Text>{upgradeCosts['slot1'].letter} {letters[upgradeCosts['slot1'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot1'].letter].amount), suffixes) : letters[upgradeCosts['slot1'].letter].amount}/{upgradeCosts['slot1'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot1'].costs), suffixes) : upgradeCosts['slot1'].costs}</Text> :
+                            <Text></Text>
+                    }
+                </Grid.Col>
+                <Grid.Col span={4} key='slot2'>
+                    {
+                        Object.keys(upgradeCosts).length >= 2 ?
+                            <Text>{upgradeCosts['slot2'].letter} {letters[upgradeCosts['slot2'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot2'].letter].amount), suffixes) : letters[upgradeCosts['slot2'].letter].amount}/{upgradeCosts['slot2'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot2'].costs), suffixes) : upgradeCosts['slot2'].costs}</Text> :
+                            <Text></Text>
+                    }
+                </Grid.Col>
+                <Grid.Col span={4}/>
+                <Grid.Col span={4} key='slot3'>
+                    {
+                        Object.keys(upgradeCosts).length >= 3 ?
+                            <Text>{upgradeCosts['slot3'].letter} {letters[upgradeCosts['slot3'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot3'].letter].amount), suffixes) : letters[upgradeCosts['slot3'].letter].amount}/{upgradeCosts['slot3'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot3'].costs), suffixes) : upgradeCosts['slot3'].costs}</Text> :
+                            <Text></Text>
+                    }
+                </Grid.Col>
+                <Grid.Col span={4} key='slot4'>
+                    {
+                        Object.keys(upgradeCosts).length >= 4 ?
+                            <Text>{upgradeCosts['slot4'].letter} {letters[upgradeCosts['slot4'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot4'].letter].amount), suffixes) : letters[upgradeCosts['slot4'].letter].amount}/{upgradeCosts['slot4'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot4'].costs), suffixes) : upgradeCosts['slot4'].costs}</Text> :
+                            <Text></Text>
+                    }
+                </Grid.Col>
                 <Grid.Col span={4}>
                     <Button
                         leftIcon={<IconArrowBigUp/>}

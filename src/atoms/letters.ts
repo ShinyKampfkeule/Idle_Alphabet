@@ -5,7 +5,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
     'A': {
         unlocked: true,
         bought: false,
-        amount: 0,
+        amount: 200000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
@@ -187,25 +187,25 @@ export const lettersAtom = atom<LetterButtonInterface>({
         buyingCosts: {
             "A": 500
         },
-        amount: 0,
+        amount: 200000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
         productionRateInitialCosts: {
-            'slot1': 10,
-            'slot2': 10,
-            'slot3': 10,
-            'slot4': 10
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
 
         },
         productionSpeed: 1,
         productionInitSpeed: 1,
         productionSpeedLevel: 0,
         productionSpeedInitialCosts: {
-            'slot1': 10,
-            'slot2': 10,
-            'slot3': 10,
-            'slot4': 10
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
 
         },
         automatedProduction: false,
@@ -214,38 +214,38 @@ export const lettersAtom = atom<LetterButtonInterface>({
         },
         productionRateUpgrades: {
             10: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.2,
+                functionalityGrowthRate: 1.2,
                 upgradeSlots: {
                     "slot1": "B"
                 }
             },
             25: {
                 costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                functionalityGrowthRate: 1.25,
                 upgradeSlots: {
                     "slot1": "B"
                 }
             },
             35: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.35,
+                functionalityGrowthRate: 1.35,
                 upgradeSlots: {
                     "slot1": "B",
                     "slot2": "C"
                 }
             },
             50: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.5,
+                functionalityGrowthRate: 1.5,
                 upgradeSlots: {
                     "slot1": "B",
                     "slot2": "C"
                 }
             },
             65: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.3,
+                functionalityGrowthRate: 1.3,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B",
@@ -253,8 +253,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             80: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.17,
+                functionalityGrowthRate: 1.17,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B",
@@ -263,8 +263,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             95: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.12,
+                functionalityGrowthRate: 1.12,
                 upgradeSlots: {
                     "slot1": "B",
                     "slot2": "C",
@@ -273,8 +273,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             100: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.07,
+                functionalityGrowthRate: 1.07,
                 upgradeSlots: {
                     "slot1": "C",
                     "slot2": "D",
@@ -283,35 +283,35 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             1000000000: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.03,
+                functionalityGrowthRate: 1.03,
             }
         },
         productionSpeedUpgrades: {
             10: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.2,
+                functionalityGrowthRate: 1.07,
                 upgradeSlots: {
                     "slot1": "B"
                 }
             },
             25: {
                 costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                functionalityGrowthRate: 1.04,
                 upgradeSlots: {
                     "slot1": "B"
                 }
             },
             35: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.35,
+                functionalityGrowthRate: 1.02,
                 upgradeSlots: {
                     "slot1": "B",
                     "slot2": "C"
                 }
             },
             50: {
-                costsGrowthRate: 1.25,
+                costsGrowthRate: 1.5,
                 functionalityGrowthRate: 1.05,
                 upgradeSlots: {
                     "slot1": "B",
@@ -319,8 +319,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             65: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.3,
+                functionalityGrowthRate: 1.01,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B",
@@ -328,8 +328,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             80: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.17,
+                functionalityGrowthRate: 1.006,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B",
@@ -338,8 +338,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             95: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.12,
+                functionalityGrowthRate: 1.002,
                 upgradeSlots: {
                     "slot1": "B",
                     "slot2": "C",
@@ -348,8 +348,8 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             100: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.07,
+                functionalityGrowthRate: 1.001,
                 upgradeSlots: {
                     "slot1": "C",
                     "slot2": "D",
@@ -358,325 +358,389 @@ export const lettersAtom = atom<LetterButtonInterface>({
                 }
             },
             1000000000: {
-                costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.05,
+                costsGrowthRate: 1.03,
+                functionalityGrowthRate: 1.0008,
             }
         }
     },
-    // 'C': {
-    //     unlocked: false,
-    //     bought: false,
-    //     buyingCosts: {
-    //         "B": 500
-    //     },
-    //     amount: 0,
-    //     productionRate: 1,
-    //     productionRateLevel: 0,
-    //     productionRateInitialCosts: 10,
-    //     productionSpeed: 1,
-    //     productionSpeedLevel: 0,
-    //     productionSpeedInitialCosts: 10,
-    //     automatedProduction: false,
-    //     automatedProductionCosts: {
-    //         'C': 500
-    //     },
-    //     productionRateUpgrades: {
-    //         10: {
-    //             growthRate: 1.2,
-    //             upgradeSlots: {
-    //                 "slot1": "C"
-    //             }
-    //         },
-    //         25: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C"
-    //             }
-    //         },
-    //         35: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C"
-    //             }
-    //         },
-    //         50: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C"
-    //             }
-    //         },
-    //         65: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C"
-    //             }
-    //         },
-    //         80: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C",
-    //                 "slot4": "D"
-    //             }
-    //         },
-    //         95: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C",
-    //                 "slot3": "D",
-    //                 "slot4": "E"
-    //             }
-    //         },
-    //         100: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "C",
-    //                 "slot2": "D",
-    //                 "slot3": "E",
-    //                 "slot4": "F"
-    //             }
-    //         },
-    //         1000000000: {
-    //             growthRate: 1.25
-    //         }
-    //     },
-    //     productionSpeedUpgrades: {
-    //         10: {
-    //             growthRate: 1.2,
-    //             upgradeSlots: {
-    //                 "slot1": "C"
-    //             }
-    //         },
-    //         25: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C"
-    //             }
-    //         },
-    //         35: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C"
-    //             }
-    //         },
-    //         50: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C"
-    //             }
-    //         },
-    //         65: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C"
-    //             }
-    //         },
-    //         80: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C",
-    //                 "slot4": "D"
-    //             }
-    //         },
-    //         95: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C",
-    //                 "slot3": "D",
-    //                 "slot4": "E"
-    //             }
-    //         },
-    //         100: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "C",
-    //                 "slot2": "D",
-    //                 "slot3": "E",
-    //                 "slot4": "F"
-    //             }
-    //         },
-    //         1000000000: {
-    //             growthRate: 1.25
-    //         }
-    //     }
-    // },
-    // 'D': {
-    //     unlocked: false,
-    //     bought: false,
-    //     buyingCosts: {
-    //         "C": 500
-    //     },
-    //     amount: 0,
-    //     productionRate: 1,
-    //     productionRateLevel: 0,
-    //     productionRateInitialCosts: 10,
-    //     productionSpeed: 1,
-    //     productionSpeedLevel: 0,
-    //     productionSpeedInitialCosts: 10,
-    //     automatedProduction: false,
-    //     automatedProductionCosts: {
-    //         'D': 500
-    //     },
-    //     productionRateUpgrades: {
-    //         10: {
-    //             growthRate: 1.2,
-    //             upgradeSlots: {
-    //                 "slot1": "D"
-    //             }
-    //         },
-    //         25: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "C",
-    //                 "slot2": "D"
-    //             }
-    //         },
-    //         35: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C",
-    //                 "slot3": "D"
-    //             }
-    //         },
-    //         50: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C",
-    //                 "slot4": "D"
-    //             }
-    //         },
-    //         65: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C",
-    //                 "slot3": "D",
-    //                 "slot4": "E"
-    //             }
-    //         },
-    //         80: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "C",
-    //                 "slot2": "D",
-    //                 "slot3": "E",
-    //                 "slot4": "F"
-    //             }
-    //         },
-    //         95: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "D",
-    //                 "slot2": "E",
-    //                 "slot3": "F",
-    //                 "slot4": "G"
-    //             }
-    //         },
-    //         100: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "E",
-    //                 "slot2": "F",
-    //                 "slot3": "G",
-    //                 "slot4": "H"
-    //             }
-    //         },
-    //         1000000000: {
-    //             growthRate: 1.25
-    //         }
-    //     },
-    //     productionSpeedUpgrades: {
-    //         10: {
-    //             growthRate: 1.2,
-    //             upgradeSlots: {
-    //                 "slot1": "D"
-    //             }
-    //         },
-    //         25: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "C",
-    //                 "slot2": "D"
-    //             }
-    //         },
-    //         35: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C",
-    //                 "slot3": "D"
-    //             }
-    //         },
-    //         50: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "A",
-    //                 "slot2": "B",
-    //                 "slot3": "C",
-    //                 "slot4": "D"
-    //             }
-    //         },
-    //         65: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "B",
-    //                 "slot2": "C",
-    //                 "slot3": "D",
-    //                 "slot4": "E"
-    //             }
-    //         },
-    //         80: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "C",
-    //                 "slot2": "D",
-    //                 "slot3": "E",
-    //                 "slot4": "F"
-    //             }
-    //         },
-    //         95: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "D",
-    //                 "slot2": "E",
-    //                 "slot3": "F",
-    //                 "slot4": "G"
-    //             }
-    //         },
-    //         100: {
-    //             growthRate: 1.25,
-    //             upgradeSlots: {
-    //                 "slot1": "E",
-    //                 "slot2": "F",
-    //                 "slot3": "G",
-    //                 "slot4": "H"
-    //             }
-    //         },
-    //         1000000000: {
-    //             growthRate: 1.25
-    //         }
-    //     }
-    // },
+    'C': {
+        unlocked: false,
+        bought: false,
+        buyingCosts: {
+            "B": 500
+        },
+        amount: 200000000,
+        productionRate: 1,
+        productionInitRate: 1,
+        productionRateLevel: 0,
+        productionRateInitialCosts: {
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
+
+        },
+        productionSpeed: 1,
+        productionInitSpeed: 1,
+        productionSpeedLevel: 0,
+        productionSpeedInitialCosts: {
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
+
+        },
+        automatedProduction: false,
+        automatedProductionCosts: {
+            'C': 500
+        },
+        productionRateUpgrades: {
+            10: {
+                costsGrowthRate: 1.2,
+                functionalityGrowthRate: 1.2,
+                upgradeSlots: {
+                    "slot1": "C"
+                }
+            },
+            25: {
+                costsGrowthRate: 1.25,
+                functionalityGrowthRate: 1.25,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C"
+                }
+            },
+            35: {
+                costsGrowthRate: 1.35,
+                functionalityGrowthRate: 1.35,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C"
+                }
+            },
+            50: {
+                costsGrowthRate: 1.5,
+                functionalityGrowthRate: 1.5,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C"
+                }
+            },
+            65: {
+                costsGrowthRate: 1.3,
+                functionalityGrowthRate: 1.3,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C"
+                }
+            },
+            80: {
+                costsGrowthRate: 1.17,
+                functionalityGrowthRate: 1.17,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C",
+                    "slot4": "D"
+                }
+            },
+            95: {
+                costsGrowthRate: 1.12,
+                functionalityGrowthRate: 1.12,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C",
+                    "slot3": "D",
+                    "slot4": "E"
+                }
+            },
+            100: {
+                costsGrowthRate: 1.07,
+                functionalityGrowthRate: 1.07,
+                upgradeSlots: {
+                    "slot1": "C",
+                    "slot2": "D",
+                    "slot3": "E",
+                    "slot4": "F"
+                }
+            },
+            1000000000: {
+                costsGrowthRate: 1.03,
+                functionalityGrowthRate: 1.03,
+            }
+        },
+        productionSpeedUpgrades: {
+            10: {
+                costsGrowthRate: 1.2,
+                functionalityGrowthRate: 1.07,
+                upgradeSlots: {
+                    "slot1": "C"
+                }
+            },
+            25: {
+                costsGrowthRate: 1.25,
+                functionalityGrowthRate: 1.04,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C"
+                }
+            },
+            35: {
+                costsGrowthRate: 1.35,
+                functionalityGrowthRate: 1.02,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C"
+                }
+            },
+            50: {
+                costsGrowthRate: 1.5,
+                functionalityGrowthRate: 1.05,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C"
+                }
+            },
+            65: {
+                costsGrowthRate: 1.3,
+                functionalityGrowthRate: 1.01,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C"
+                }
+            },
+            80: {
+                costsGrowthRate: 1.17,
+                functionalityGrowthRate: 1.006,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C",
+                    "slot4": "D"
+                }
+            },
+            95: {
+                costsGrowthRate: 1.12,
+                functionalityGrowthRate: 1.002,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C",
+                    "slot3": "D",
+                    "slot4": "E"
+                }
+            },
+            100: {
+                costsGrowthRate: 1.07,
+                functionalityGrowthRate: 1.001,
+                upgradeSlots: {
+                    "slot1": "C",
+                    "slot2": "D",
+                    "slot3": "E",
+                    "slot4": "F"
+                }
+            },
+            1000000000: {
+                costsGrowthRate: 1.03,
+                functionalityGrowthRate: 1.0008,
+            }
+        }
+    },
+    'D': {
+        unlocked: false,
+        bought: false,
+        buyingCosts: {
+            "C": 500
+        },
+        amount: 200000000,
+        productionRate: 1,
+        productionInitRate: 1,
+        productionRateLevel: 0,
+        productionRateInitialCosts: {
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
+
+        },
+        productionSpeed: 1,
+        productionInitSpeed: 1,
+        productionSpeedLevel: 0,
+        productionSpeedInitialCosts: {
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
+
+        },
+        automatedProduction: false,
+        automatedProductionCosts: {
+            'D': 500
+        },
+        productionRateUpgrades: {
+            10: {
+                costsGrowthRate: 1.2,
+                functionalityGrowthRate: 1.2,
+                upgradeSlots: {
+                    "slot1": "D"
+                }
+            },
+            25: {
+                costsGrowthRate: 1.25,
+                functionalityGrowthRate: 1.25,
+                upgradeSlots: {
+                    "slot1": "C",
+                    "slot2": "D"
+                }
+            },
+            35: {
+                costsGrowthRate: 1.35,
+                functionalityGrowthRate: 1.35,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C",
+                    "slot3": "D"
+                }
+            },
+            50: {
+                costsGrowthRate: 1.5,
+                functionalityGrowthRate: 1.5,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C",
+                    "slot4": "D"
+                }
+            },
+            65: {
+                costsGrowthRate: 1.3,
+                functionalityGrowthRate: 1.3,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C",
+                    "slot3": "D",
+                    "slot4": "E"
+                }
+            },
+            80: {
+                costsGrowthRate: 1.17,
+                functionalityGrowthRate: 1.17,
+                upgradeSlots: {
+                    "slot1": "C",
+                    "slot2": "D",
+                    "slot3": "E",
+                    "slot4": "F"
+                }
+            },
+            95: {
+                costsGrowthRate: 1.12,
+                functionalityGrowthRate: 1.12,
+                upgradeSlots: {
+                    "slot1": "D",
+                    "slot2": "E",
+                    "slot3": "F",
+                    "slot4": "G"
+                }
+            },
+            100: {
+                costsGrowthRate: 1.07,
+                functionalityGrowthRate: 1.07,
+                upgradeSlots: {
+                    "slot1": "E",
+                    "slot2": "F",
+                    "slot3": "G",
+                    "slot4": "H"
+                }
+            },
+            1000000000: {
+                costsGrowthRate: 1.03,
+                functionalityGrowthRate: 1.03,
+            }
+        },
+        productionSpeedUpgrades: {
+            10: {
+                costsGrowthRate: 1.2,
+                functionalityGrowthRate: 1.07,
+                upgradeSlots: {
+                    "slot1": "D"
+                }
+            },
+            25: {
+                costsGrowthRate: 1.25,
+                functionalityGrowthRate: 1.04,
+                upgradeSlots: {
+                    "slot1": "C",
+                    "slot2": "D"
+                }
+            },
+            35: {
+                costsGrowthRate: 1.35,
+                functionalityGrowthRate: 1.02,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C",
+                    "slot3": "D"
+                }
+            },
+            50: {
+                costsGrowthRate: 1.5,
+                functionalityGrowthRate: 1.05,
+                upgradeSlots: {
+                    "slot1": "A",
+                    "slot2": "B",
+                    "slot3": "C",
+                    "slot4": "D"
+                }
+            },
+            65: {
+                costsGrowthRate: 1.3,
+                functionalityGrowthRate: 1.01,
+                upgradeSlots: {
+                    "slot1": "B",
+                    "slot2": "C",
+                    "slot3": "D",
+                    "slot4": "E"
+                }
+            },
+            80: {
+                costsGrowthRate: 1.17,
+                functionalityGrowthRate: 1.006,
+                upgradeSlots: {
+                    "slot1": "C",
+                    "slot2": "D",
+                    "slot3": "E",
+                    "slot4": "F"
+                }
+            },
+            95: {
+                costsGrowthRate: 1.12,
+                functionalityGrowthRate: 1.002,
+                upgradeSlots: {
+                    "slot1": "D",
+                    "slot2": "E",
+                    "slot3": "F",
+                    "slot4": "G"
+                }
+            },
+            100: {
+                costsGrowthRate: 1.07,
+                functionalityGrowthRate: 1.001,
+                upgradeSlots: {
+                    "slot1": "E",
+                    "slot2": "F",
+                    "slot3": "G",
+                    "slot4": "H"
+                }
+            },
+            1000000000: {
+                costsGrowthRate: 1.03,
+                functionalityGrowthRate: 1.0008,
+            }
+        }
+    },
     // 'E': {
     //     unlocked: false,
     //     bought: false,
