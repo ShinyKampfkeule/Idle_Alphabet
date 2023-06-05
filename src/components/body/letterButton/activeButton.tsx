@@ -10,6 +10,7 @@ import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 import {activeTabAtom} from "../../../atoms/activeTab";
 import {activeLetterAtom} from "../../../atoms/upgradeLetter";
 import findLevelCap from "../../../functions/findLevelCap";
+import {calculateIncreasingGrowth} from "../../../functions/calculateGrowth";
 
 export default function ActiveButton({letter}: LetterButtonLetterInterface) {
     const colors = useAtomValue(colorsAtom)
@@ -54,7 +55,7 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
             setIsIntervalRunning(true)
             const interval = setInterval(() => {
                 const updatedLetters = Object.assign({}, letters)
-                updatedLetters[letter].amount += updatedLetters[letter].productionRate
+                updatedLetters[letter].amount = Number((updatedLetters[letter].amount + updatedLetters[letter].productionRate).toFixed(2))
                 setLetters(updatedLetters)
                 clearInterval(interval)
                 setIsIntervalRunning(false)
@@ -72,7 +73,7 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
             if (letters[letter].automatedProduction) {
                 setIsIntervalRunning(true)
                 const updatedLetters = Object.assign({}, letters)
-                updatedLetters[letter].amount += updatedLetters[letter].productionRate
+                updatedLetters[letter].amount = Number((updatedLetters[letter].amount + updatedLetters[letter].productionRate).toFixed(2))
                 setLetters(updatedLetters)
             }
         }, 1000 * letters[letter].productionSpeed)
@@ -80,7 +81,7 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
         return () => {
             clearInterval(intervalID)
         }
-    }, [])
+    }, [letters])
 
     return (
         <Flex
@@ -144,7 +145,7 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
                     <Text
                         size="1.2rem"
                     >
-                        {letters[letter].amount > 999999 ? changeNumberDisplay(Math.round(letters[letter].amount), suffixes) : letters[letter].amount}
+                        {letters[letter].amount > 9999 ? changeNumberDisplay(Number(letters[letter].amount.toFixed(0)), suffixes) : letters[letter].amount}
                     </Text>
                 </Flex>
             </Button>
@@ -161,11 +162,17 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     if (productionRateLevelCap && productionRateLevelCap.upgradeSlots) {
         Object.keys(productionRateLevelCap.upgradeSlots).map((key) => {
             if (productionRateLevelCap && productionRateLevelCap.upgradeSlots) {
-                let upgradeCosts
-                if (letters[letter].productionRateLevel === 0) {
-                    upgradeCosts = letters[letter].productionRateInitialCosts
-                } else {
-                    upgradeCosts = Math.round(letters[letter].productionRateInitialCosts * (letters[letter].productionRateLevel ^ letters[letter].productionRateLevel))
+                let upgradeCosts = 0
+                if (productionRateLevelCap) {
+                    if (productionRateLevelCap.upgradeSlots) {
+                        Object.keys(productionRateLevelCap.upgradeSlots).map((key) => {
+                            upgradeCosts += calculateIncreasingGrowth(
+                                productionRateLevelCap.costsGrowthRate,
+                                letters[letter].productionSpeedInitialCosts[key],
+                                letters[letter].productionRateLevel + 1
+                            )
+                        })
+                    }
                 }
                 if (letters[productionRateLevelCap.upgradeSlots[key]].amount < upgradeCosts) {
                     productionRateBuyable = false
@@ -181,11 +188,17 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     if (productionSpeedLevelCap && productionSpeedLevelCap.upgradeSlots) {
         Object.keys(productionSpeedLevelCap.upgradeSlots).map((key) => {
             if (productionSpeedLevelCap && productionSpeedLevelCap.upgradeSlots) {
-                let upgradeCosts
-                if (letters[letter].productionSpeedLevel === 0) {
-                    upgradeCosts = letters[letter].productionSpeedInitialCosts
-                } else {
-                    upgradeCosts = Math.round(letters[letter].productionSpeedInitialCosts * (letters[letter].productionSpeedLevel ^ letters[letter].productionSpeedLevel))
+                let upgradeCosts = 0
+                if (productionSpeedLevelCap) {
+                    if (productionSpeedLevelCap.upgradeSlots) {
+                        Object.keys(productionSpeedLevelCap.upgradeSlots).map((key) => {
+                            upgradeCosts += calculateIncreasingGrowth(
+                                productionSpeedLevelCap.costsGrowthRate,
+                                letters[letter].productionSpeedInitialCosts[key],
+                                letters[letter].productionSpeedLevel + 1
+                            )
+                        })
+                    }
                 }
                 if (letters[productionSpeedLevelCap.upgradeSlots[key]].amount < upgradeCosts) {
                     productionSpeedBuyable = false
@@ -196,10 +209,12 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     if (productionSpeedBuyable) {
         buyable = productionSpeedBuyable
     }
-    Object.keys(letters[letter].automatedProductionCosts).map((key) => {
-        if (letters[key].amount >= letters[letter].automatedProductionCosts[key]) {
-            buyable = true
-        }
-    })
+    if (!letters[letter].automatedProduction) {
+        Object.keys(letters[letter].automatedProductionCosts).map((key) => {
+            if (letters[key].amount >= letters[letter].automatedProductionCosts[key]) {
+                buyable = true
+            }
+        })
+    }
     return buyable
 }

@@ -1,0 +1,11 @@
+- Upgrade Button
+    - Upgrade Costs not displayed in correct Form (0B instead of 20M)
+    - Upgrade Costs for every needed Letter/Slot has to be different and not the same
+    - Sometimes the Amount of the Letter doesn´t fit into the Space inside the Upgrade Costs
+    - Letter B starts with the wrong Upgrade Costs on Speed and Rate
+
+- Miscellaneous
+    - Clean up Code
+    - Make new Stuff
+    - Edit missing Letters
+    - Make the Game more playable

@@ -5,49 +5,49 @@ export const lettersAtom = atom<LetterButtonInterface>({
     'A': {
         unlocked: true,
         bought: false,
-        amount: 2000000000,
+        amount: 0,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
         productionRateInitialCosts: {
-            'slot1': 10,
-            'slot2': 10,
-            'slot3': 10,
-            'slot4': 10
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
 
         },
         productionSpeed: 1,
         productionInitSpeed: 1,
         productionSpeedLevel: 0,
         productionSpeedInitialCosts: {
-            'slot1': 10,
-            'slot2': 10,
-            'slot3': 10,
-            'slot4': 10
+            'slot1': 5,
+            'slot2': 5,
+            'slot3': 5,
+            'slot4': 5
 
         },
         automatedProduction: false,
         automatedProductionCosts: {
-            'A': 500
+            'A': 100
         },
         productionRateUpgrades: {
             10: {
                 costsGrowthRate: 1.2,
-                functionalityGrowthRate: 1.05,
+                functionalityGrowthRate: 1.2,
                 upgradeSlots: {
                     "slot1": "A"
                 }
             },
             25: {
                 costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.02,
+                functionalityGrowthRate: 1.25,
                 upgradeSlots: {
                     "slot1": "A"
                 }
             },
             35: {
                 costsGrowthRate: 1.35,
-                functionalityGrowthRate: 1.015,
+                functionalityGrowthRate: 1.35,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B"
@@ -55,7 +55,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             50: {
                 costsGrowthRate: 1.5,
-                functionalityGrowthRate: 1.012,
+                functionalityGrowthRate: 1.5,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B"
@@ -63,7 +63,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             65: {
                 costsGrowthRate: 1.3,
-                functionalityGrowthRate: 1.01,
+                functionalityGrowthRate: 1.3,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B",
@@ -72,7 +72,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             80: {
                 costsGrowthRate: 1.17,
-                functionalityGrowthRate: 1.0006,
+                functionalityGrowthRate: 1.17,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B",
@@ -82,7 +82,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             95: {
                 costsGrowthRate: 1.12,
-                functionalityGrowthRate: 1.002,
+                functionalityGrowthRate: 1.12,
                 upgradeSlots: {
                     "slot1": "B",
                     "slot2": "C",
@@ -92,7 +92,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             100: {
                 costsGrowthRate: 1.07,
-                functionalityGrowthRate: 1.001,
+                functionalityGrowthRate: 1.07,
                 upgradeSlots: {
                     "slot1": "C",
                     "slot2": "D",
@@ -102,27 +102,27 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             1000000000: {
                 costsGrowthRate: 1.03,
-                functionalityGrowthRate: 1.0008,
+                functionalityGrowthRate: 1.03,
             }
         },
         productionSpeedUpgrades: {
             10: {
                 costsGrowthRate: 1.2,
-                functionalityGrowthRate: 1.05,
+                functionalityGrowthRate: 1.07,
                 upgradeSlots: {
                     "slot1": "A"
                 }
             },
             25: {
                 costsGrowthRate: 1.25,
-                functionalityGrowthRate: 1.02,
+                functionalityGrowthRate: 1.04,
                 upgradeSlots: {
                     "slot1": "A"
                 }
             },
             35: {
                 costsGrowthRate: 1.35,
-                functionalityGrowthRate: 1.015,
+                functionalityGrowthRate: 1.02,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B"
@@ -130,7 +130,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
             },
             50: {
                 costsGrowthRate: 1.5,
-                functionalityGrowthRate: 1.012,
+                functionalityGrowthRate: 1.05,
                 upgradeSlots: {
                     "slot1": "A",
                     "slot2": "B"
