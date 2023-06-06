@@ -4,13 +4,15 @@ import LetterButtonInterface, {LetterButtonLetterInterface} from "../../../inter
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
 import {colorsAtom} from "../../../atoms/colors";
 import {lettersAtom} from "../../../atoms/letters";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {suffixesAtom} from "../../../atoms/suffixes";
 import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 import {activeTabAtom} from "../../../atoms/activeTab";
 import {activeLetterAtom} from "../../../atoms/upgradeLetter";
 import findLevelCap from "../../../functions/findLevelCap";
 import {calculateIncreasingGrowth} from "../../../functions/calculateGrowth";
+import {useSynchronizedInterval} from "interval-hooks";
+import CostsUpgradeInterface from "../../../interfaces/upgradeCosts";
 
 export default function ActiveButton({letter}: LetterButtonLetterInterface) {
     const colors = useAtomValue(colorsAtom)
@@ -68,20 +70,18 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
         setActiveTab("Upgrades")
     }
 
-    useEffect(() => {
-        const intervalID = setInterval(() => {
-            if (letters[letter].automatedProduction) {
-                setIsIntervalRunning(true)
-                const updatedLetters = Object.assign({}, letters)
-                updatedLetters[letter].amount = Number((updatedLetters[letter].amount + updatedLetters[letter].productionRate).toFixed(2))
-                setLetters(updatedLetters)
-            }
-        }, 1000 * letters[letter].productionSpeed)
+    const updateAmount = () => {
+        const updatedLetters = Object.assign({}, letters)
+        updatedLetters[letter].amount = Number((updatedLetters[letter].amount + updatedLetters[letter].productionRate).toFixed(2))
+        setLetters(updatedLetters)
+    }
 
-        return () => {
-            clearInterval(intervalID)
-        }
-    }, [letters])
+    useSynchronizedInterval(
+        () => {
+            updateAmount()
+        },
+        letters[letter].automatedProduction ? 1000 * letters[letter].productionSpeed : null
+    )
 
     return (
         <Flex
@@ -154,35 +154,65 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
 }
 
 function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
+    // console.log('#########################################')
     let buyable = false
     const productionRateLevel = letters[letter].productionRateLevel + 1
     const productionSpeedLevel = letters[letter].productionSpeedLevel + 1
     let productionRateBuyable = true
+    // console.log('Production Rate Level: ' + productionRateLevel)
+    // console.log(letters[letter].productionRateUpgrades)
     const productionRateLevelCap = findLevelCap(productionRateLevel, letters[letter].productionRateUpgrades)
     if (productionRateLevelCap && productionRateLevelCap.upgradeSlots) {
         Object.keys(productionRateLevelCap.upgradeSlots).map((key) => {
             if (productionRateLevelCap && productionRateLevelCap.upgradeSlots) {
-                let upgradeCosts = 0
+                const upgradeCosts: CostsUpgradeInterface = {
+                    'slot1': {
+                        costs: 0,
+                        letter: 'A'
+                    },
+                    'slot2': {
+                        costs: 0,
+                        letter: 'A'
+                    },
+                    'slot3': {
+                        costs: 0,
+                        letter: 'A'
+                    },
+                    'slot4': {
+                        costs: 0,
+                        letter: 'A'
+                    }
+                }
                 if (productionRateLevelCap) {
                     if (productionRateLevelCap.upgradeSlots) {
                         Object.keys(productionRateLevelCap.upgradeSlots).map((key) => {
-                            upgradeCosts += calculateIncreasingGrowth(
+                            // console.log('Growth Rate: ' + productionRateLevelCap.costsGrowthRate)
+                            // console.log('Initial Costs: ' + letters[letter].productionSpeedInitialCosts[key])
+                            // console.log('Rate Level: ' + (letters[letter].productionRateLevel + 1))
+                            upgradeCosts[key].costs = calculateIncreasingGrowth(
                                 productionRateLevelCap.costsGrowthRate,
                                 letters[letter].productionSpeedInitialCosts[key],
                                 letters[letter].productionRateLevel + 1
                             )
+                            // console.log(upgradeCosts)
                         })
                     }
                 }
-                if (letters[productionRateLevelCap.upgradeSlots[key]].amount < upgradeCosts) {
+                // console.log('Key: ' + key)
+                // console.log('Letter Amount: ' + letters[productionRateLevelCap.upgradeSlots[key]].amount)
+                // console.log('Costs: ' + upgradeCosts[key].costs)
+                // console.log('Is Greater: ' + (letters[productionRateLevelCap.upgradeSlots[key]].amount < upgradeCosts[key].costs))
+                if (upgradeCosts[key].costs > 0 && letters[productionRateLevelCap.upgradeSlots[key]].amount < upgradeCosts[key].costs) {
                     productionRateBuyable = false
                 }
             }
         })
     }
+    // console.log(productionRateBuyable)
     if (productionRateBuyable) {
         buyable = productionRateBuyable
     }
+    // console.log(buyable)
     let productionSpeedBuyable = true
     const productionSpeedLevelCap = findLevelCap(productionSpeedLevel, letters[letter].productionSpeedUpgrades)
     if (productionSpeedLevelCap && productionSpeedLevelCap.upgradeSlots) {
@@ -209,6 +239,7 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     if (productionSpeedBuyable) {
         buyable = productionSpeedBuyable
     }
+    // console.log(buyable)
     if (!letters[letter].automatedProduction) {
         Object.keys(letters[letter].automatedProductionCosts).map((key) => {
             if (letters[key].amount >= letters[letter].automatedProductionCosts[key]) {
@@ -216,5 +247,6 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
             }
         })
     }
+    // console.log(buyable)
     return buyable
 }

@@ -1,7 +1,7 @@
 - Upgrade Button
     - Sometimes the Amount of the Letter doesn´t fit into the Space inside the Upgrade Costs
-    - Letter B starts with the wrong Upgrade Costs on Speed and Rate
-    - Multi Automation did not work -> perhaps WebWorker but uuhhh dont know how !
+    - Sometimes Upgradeable is display even if it is not upgradeable
+    - Change Color of Upgrade Costs Slots if Amount is too low or enough
 
 - Miscellaneous
     - Clean up Code

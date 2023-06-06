@@ -5,7 +5,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
     'A': {
         unlocked: true,
         bought: false,
-        amount: 200000000,
+        amount: 1000000000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
@@ -187,7 +187,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         buyingCosts: {
             "A": 500
         },
-        amount: 200000000,
+        amount: 1000000000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
@@ -210,7 +210,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         },
         automatedProduction: false,
         automatedProductionCosts: {
-            'B': 500
+            'B': 100
         },
         productionRateUpgrades: {
             10: {
@@ -369,7 +369,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         buyingCosts: {
             "B": 500
         },
-        amount: 200000000,
+        amount: 1000000000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
@@ -392,7 +392,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         },
         automatedProduction: false,
         automatedProductionCosts: {
-            'C': 500
+            'C': 100
         },
         productionRateUpgrades: {
             10: {
@@ -555,7 +555,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         buyingCosts: {
             "C": 500
         },
-        amount: 200000000,
+        amount: 1000000000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
@@ -578,7 +578,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         },
         automatedProduction: false,
         automatedProductionCosts: {
-            'D': 500
+            'D': 100
         },
         productionRateUpgrades: {
             10: {

@@ -5,6 +5,7 @@ import {lettersAtom} from "../../../atoms/letters";
 import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 import {suffixesAtom} from "../../../atoms/suffixes";
 import UpgradeButton from "./upgradeButton";
+import formatNumber from "../../../functions/formatNumber";
 
 export default function Upgrades() {
     const activeLetter = useAtomValue(activeLetterAtom)
@@ -66,8 +67,4 @@ export default function Upgrades() {
             </Flex>
         </>
     )
-}
-
-function formatNumber(toFormat: number) {
-    return parseFloat(toFormat.toFixed(2)).toLocaleString()
 }

@@ -1,4 +1,4 @@
-import {Button, Grid, Paper, Text, Title} from "@mantine/core";
+import {Button, Grid, Paper, Text, Title, Tooltip} from "@mantine/core";
 import {useAtom, useAtomValue} from "jotai";
 import {colorsAtom} from "../../../atoms/colors";
 import UpgradeButtonInterface from "../../../interfaces/upgradeButton";
@@ -11,6 +11,7 @@ import CostsUpgradeInterface from "../../../interfaces/upgradeCosts";
 import findLevelCap from "../../../functions/findLevelCap";
 import {calculateDecreasingGrowth, calculateIncreasingGrowth} from "../../../functions/calculateGrowth";
 import changeNumberDisplay from "../../../functions/changeNumberDisplay";
+import formatNumber from "../../../functions/formatNumber";
 
 export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface) {
     const colors = useAtomValue(colorsAtom)
@@ -91,6 +92,7 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                                             currentLetterData.productionRateInitialCosts[key],
                                             currentLevel
                                         )
+                                    console.log(currentLetterData.productionRateInitialCosts)
                                 }
                             })
                         }
@@ -121,7 +123,6 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 })
                 break
         }
-        console.log(updatedLetters)
         setLetters(updatedLetters)
     }
 
@@ -326,21 +327,28 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 <Grid.Col span={3}>
                     {
                         upgrade !== "Automate Production"
-                            ? <Text ta="right">{nextRate}</Text>
+                            ? <Text
+                                ta="right">{Number(nextRate) > 999999 ? changeNumberDisplay(Number(nextRate), suffixes) : nextRate}</Text>
                             : <></>
                     }
                 </Grid.Col>
                 <Grid.Col span={4} key='slot1'>
                     {
                         Object.keys(upgradeCosts).length >= 1 ?
-                            <Text>{upgradeCosts['slot1'].letter} {letters[upgradeCosts['slot1'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot1'].letter].amount), suffixes) : letters[upgradeCosts['slot1'].letter].amount}/{upgradeCosts['slot1'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot1'].costs), suffixes) : upgradeCosts['slot1'].costs}</Text> :
+                            <Tooltip
+                                label={formatNumber(letters[upgradeCosts['slot1'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot1'].costs)}>
+                                <Text>{upgradeCosts['slot1'].letter} {letters[upgradeCosts['slot1'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot1'].letter].amount), suffixes) : letters[upgradeCosts['slot1'].letter].amount}/{upgradeCosts['slot1'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot1'].costs), suffixes) : upgradeCosts['slot1'].costs}</Text>
+                            </Tooltip> :
                             <Text></Text>
                     }
                 </Grid.Col>
                 <Grid.Col span={4} key='slot2'>
                     {
                         Object.keys(upgradeCosts).length >= 2 ?
-                            <Text>{upgradeCosts['slot2'].letter} {letters[upgradeCosts['slot2'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot2'].letter].amount), suffixes) : letters[upgradeCosts['slot2'].letter].amount}/{upgradeCosts['slot2'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot2'].costs), suffixes) : upgradeCosts['slot2'].costs}</Text> :
+                            <Tooltip
+                                label={formatNumber(letters[upgradeCosts['slot2'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot2'].costs)}>
+                                <Text>{upgradeCosts['slot2'].letter} {letters[upgradeCosts['slot2'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot2'].letter].amount), suffixes) : letters[upgradeCosts['slot2'].letter].amount}/{upgradeCosts['slot2'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot2'].costs), suffixes) : upgradeCosts['slot2'].costs}</Text>
+                            </Tooltip> :
                             <Text></Text>
                     }
                 </Grid.Col>
@@ -348,14 +356,20 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 <Grid.Col span={4} key='slot3'>
                     {
                         Object.keys(upgradeCosts).length >= 3 ?
-                            <Text>{upgradeCosts['slot3'].letter} {letters[upgradeCosts['slot3'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot3'].letter].amount), suffixes) : letters[upgradeCosts['slot3'].letter].amount}/{upgradeCosts['slot3'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot3'].costs), suffixes) : upgradeCosts['slot3'].costs}</Text> :
+                            <Tooltip
+                                label={formatNumber(letters[upgradeCosts['slot3'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot3'].costs)}>
+                                <Text>{upgradeCosts['slot3'].letter} {letters[upgradeCosts['slot3'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot3'].letter].amount), suffixes) : letters[upgradeCosts['slot3'].letter].amount}/{upgradeCosts['slot3'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot3'].costs), suffixes) : upgradeCosts['slot3'].costs}</Text>
+                            </Tooltip> :
                             <Text></Text>
                     }
                 </Grid.Col>
                 <Grid.Col span={4} key='slot4'>
                     {
                         Object.keys(upgradeCosts).length >= 4 ?
-                            <Text>{upgradeCosts['slot4'].letter} {letters[upgradeCosts['slot4'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot4'].letter].amount), suffixes) : letters[upgradeCosts['slot4'].letter].amount}/{upgradeCosts['slot4'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot4'].costs), suffixes) : upgradeCosts['slot4'].costs}</Text> :
+                            <Tooltip
+                                label={formatNumber(letters[upgradeCosts['slot3'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot3'].costs)}>
+                                <Text>{upgradeCosts['slot4'].letter} {letters[upgradeCosts['slot4'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot4'].letter].amount), suffixes) : letters[upgradeCosts['slot4'].letter].amount}/{upgradeCosts['slot4'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot4'].costs), suffixes) : upgradeCosts['slot4'].costs}</Text>
+                            </Tooltip> :
                             <Text></Text>
                     }
                 </Grid.Col>
