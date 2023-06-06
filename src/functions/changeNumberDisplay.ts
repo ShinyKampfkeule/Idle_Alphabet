@@ -4,6 +4,11 @@ export default function changeNumberDisplay(amount: number, suffixes: string[]) 
     if (numString.includes('.')) {
         sub = 3
     }
-    const i = Math.floor((numString.length - sub) / 3)
-    return parseFloat((amount / Math.pow(1000, i)).toFixed(1)) + suffixes[i]
+    let i = Math.floor((numString.length - sub) / 3)
+    let value = parseFloat((amount / Math.pow(1000, i)).toFixed(1))
+    if (value >= 1000) {
+        value = 1
+        i += 1
+    }
+    return value + suffixes[i]
 }

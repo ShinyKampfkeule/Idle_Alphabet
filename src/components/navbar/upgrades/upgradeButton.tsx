@@ -304,7 +304,17 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 <Grid.Col span={3}>
                     {
                         upgrade !== "Automate Production"
-                            ? <Text ta="right">{currentRate}</Text>
+                            ? upgrade === "Increase Production Speed" ?
+                                <Text ta="right">{currentRate}</Text> :
+                                <Tooltip label={formatNumber(Number(currentRate))}>
+                                    <Text ta="right">
+                                        {
+                                            Number(currentRate) > 999999 ?
+                                                changeNumberDisplay(Number(currentRate), suffixes) :
+                                                currentRate
+                                        }
+                                    </Text>
+                                </Tooltip>
                             : <></>
                     }
                 </Grid.Col>
@@ -327,8 +337,17 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 <Grid.Col span={3}>
                     {
                         upgrade !== "Automate Production"
-                            ? <Text
-                                ta="right">{Number(nextRate) > 999999 ? changeNumberDisplay(Number(nextRate), suffixes) : nextRate}</Text>
+                            ? upgrade === "Increase Production Speed" ?
+                                <Text ta="right">{nextRate}</Text> :
+                                <Tooltip label={formatNumber(Number(nextRate))}>
+                                    <Text ta="right">
+                                        {
+                                            Number(nextRate) > 999999 ?
+                                                changeNumberDisplay(Number(nextRate), suffixes) :
+                                                nextRate
+                                        }
+                                    </Text>
+                                </Tooltip>
                             : <></>
                     }
                 </Grid.Col>
