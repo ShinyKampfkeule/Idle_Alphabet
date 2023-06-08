@@ -17,7 +17,6 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
     const colors = useAtomValue(colorsAtom)
     const [letters, setLetters] = useAtom(lettersAtom)
     const suffixes = useAtomValue(suffixesAtom)
-
     const [currentRate, setCurrentRate] = useState("0")
     const [nextRate, setNextRate] = useState("0")
     const [upgradeCosts, setUpgradeCosts] = useState<CostsUpgradeInterface>({
@@ -31,8 +30,16 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
         const updatedLetters = Object.assign({}, letters)
         let currentLevel = 0
         let nextLevel = 0
-        let currentLevelCap: { costsGrowthRate: number; functionalityGrowthRate: number; upgradeSlots?: UpgradeSlotsInterface; } | undefined = undefined
-        let nextLevelCap: { costsGrowthRate: number; functionalityGrowthRate: number; upgradeSlots?: UpgradeSlotsInterface; } | undefined = undefined
+        let currentLevelCap: {
+            costsGrowthRate: number;
+            functionalityGrowthRate: number;
+            upgradeSlots?: UpgradeSlotsInterface;
+        } | undefined = undefined
+        let nextLevelCap: {
+            costsGrowthRate: number;
+            functionalityGrowthRate: number;
+            upgradeSlots?: UpgradeSlotsInterface;
+        } | undefined = undefined
         const currentLetterData = updatedLetters[letter]
         switch (upgrade) {
             case 'Increase Production Speed':
@@ -64,11 +71,14 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                         Object.keys(nextLevelCap.upgradeSlots).map((key) => {
                             if (nextLevelCap && nextLevelCap.upgradeSlots) {
                                 updatedLetters[nextLevelCap.upgradeSlots[key]].amount =
-                                    Number((updatedLetters[nextLevelCap.upgradeSlots[key]].amount - calculateIncreasingGrowth(
-                                        nextLevelCap.costsGrowthRate,
-                                        currentLetterData.productionSpeedInitialCosts[key],
-                                        nextLevel
-                                    )).toFixed(2))
+                                    Number((
+                                        updatedLetters[nextLevelCap.upgradeSlots[key]].amount -
+                                        calculateIncreasingGrowth(
+                                            nextLevelCap.costsGrowthRate,
+                                            currentLetterData.productionSpeedInitialCosts[key],
+                                            nextLevel
+                                        )).toFixed(2)
+                                    )
                             }
                         })
                     }
@@ -92,7 +102,6 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                                             currentLetterData.productionRateInitialCosts[key],
                                             currentLevel
                                         )
-                                    console.log(currentLetterData.productionRateInitialCosts)
                                 }
                             })
                         }
@@ -106,11 +115,13 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                         Object.keys(nextLevelCap.upgradeSlots).map((key) => {
                             if (nextLevelCap && nextLevelCap.upgradeSlots) {
                                 updatedLetters[nextLevelCap.upgradeSlots[key]].amount =
-                                    Number((updatedLetters[nextLevelCap.upgradeSlots[key]].amount - calculateIncreasingGrowth(
-                                        nextLevelCap.costsGrowthRate,
-                                        currentLetterData.productionRateInitialCosts[key],
-                                        nextLevel
-                                    )).toFixed(2))
+                                    Number((updatedLetters[nextLevelCap.upgradeSlots[key]].amount -
+                                        calculateIncreasingGrowth(
+                                            nextLevelCap.costsGrowthRate,
+                                            currentLetterData.productionRateInitialCosts[key],
+                                            nextLevel
+                                        )).toFixed(2)
+                                    )
                             }
                         })
                     }
@@ -119,7 +130,10 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
             case 'Automate Production':
                 updatedLetters[letter].automatedProduction = true
                 Object.keys(currentLetterData.automatedProductionCosts).map((key) => {
-                    updatedLetters[key].amount = Number((updatedLetters[key].amount - currentLetterData.automatedProductionCosts[key]).toFixed(2))
+                    updatedLetters[key].amount = Number((
+                        updatedLetters[key].amount -
+                        currentLetterData.automatedProductionCosts[key]).toFixed(2)
+                    )
                 })
                 break
         }
@@ -128,10 +142,18 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
 
     useEffect(() => {
         let automateUpgrades: UpgradeCostsInterface = {}
-        const currentLevelCapSpeed = findLevelCap(letters[letter].productionSpeedLevel, letters[letter].productionSpeedUpgrades)
-        const currentLevelCapRate = findLevelCap(letters[letter].productionRateLevel, letters[letter].productionRateUpgrades)
-        const levelCapSpeed = findLevelCap(letters[letter].productionSpeedLevel + 1, letters[letter].productionSpeedUpgrades)
-        const levelCapRate = findLevelCap(letters[letter].productionRateLevel + 1, letters[letter].productionRateUpgrades)
+        const currentLevelCapSpeed = findLevelCap(
+            letters[letter].productionSpeedLevel, letters[letter].productionSpeedUpgrades
+        )
+        const currentLevelCapRate = findLevelCap(
+            letters[letter].productionRateLevel, letters[letter].productionRateUpgrades
+        )
+        const levelCapSpeed = findLevelCap(
+            letters[letter].productionSpeedLevel + 1, letters[letter].productionSpeedUpgrades
+        )
+        const levelCapRate = findLevelCap(
+            letters[letter].productionRateLevel + 1, letters[letter].productionRateUpgrades
+        )
         const newUpgradeCosts: CostsUpgradeInterface = {
             "slot1": {
                 costs: 0,
@@ -292,7 +314,13 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 }}
             >
                 <Grid.Col span={7}>
-                    <Title order={5}>{upgrade}</Title>
+                    <Title order={5}>{upgrade}{
+                        upgrade !== "Automate Production" ?
+                            upgrade === 'Increase Production Speed' ?
+                                ` (${letters[letter].productionSpeedLevel})` :
+                                ` (${letters[letter].productionRateLevel})`
+                            : ''
+                    }</Title>
                 </Grid.Col>
                 <Grid.Col span={2}>
                     {
@@ -355,8 +383,27 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                     {
                         Object.keys(upgradeCosts).length >= 1 ?
                             <Tooltip
-                                label={formatNumber(letters[upgradeCosts['slot1'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot1'].costs)}>
-                                <Text>{upgradeCosts['slot1'].letter} {letters[upgradeCosts['slot1'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot1'].letter].amount), suffixes) : letters[upgradeCosts['slot1'].letter].amount}/{upgradeCosts['slot1'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot1'].costs), suffixes) : upgradeCosts['slot1'].costs}</Text>
+                                label={
+                                    formatNumber(letters[upgradeCosts['slot1'].letter].amount) +
+                                    ' / ' +
+                                    formatNumber(upgradeCosts['slot1'].costs)
+                                }>
+                                <Text
+                                    style={{
+                                        color:
+                                            letters[upgradeCosts['slot1'].letter].amount < upgradeCosts['slot1'].costs ?
+                                                colors.accent1Color : colors.darkGray
+                                    }}
+                                >
+                                    {upgradeCosts['slot1'].letter}
+                                    {letters[upgradeCosts['slot1'].letter].amount > 10000 ?
+                                        changeNumberDisplay(Math.round(
+                                            letters[upgradeCosts['slot1'].letter].amount), suffixes) :
+                                        letters[upgradeCosts['slot1'].letter].amount}/
+                                    {upgradeCosts['slot1'].costs > 10000 ?
+                                        changeNumberDisplay(Math.round(upgradeCosts['slot1'].costs), suffixes) :
+                                        upgradeCosts['slot1'].costs}
+                                </Text>
                             </Tooltip> :
                             <Text></Text>
                     }
@@ -365,8 +412,27 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                     {
                         Object.keys(upgradeCosts).length >= 2 ?
                             <Tooltip
-                                label={formatNumber(letters[upgradeCosts['slot2'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot2'].costs)}>
-                                <Text>{upgradeCosts['slot2'].letter} {letters[upgradeCosts['slot2'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot2'].letter].amount), suffixes) : letters[upgradeCosts['slot2'].letter].amount}/{upgradeCosts['slot2'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot2'].costs), suffixes) : upgradeCosts['slot2'].costs}</Text>
+                                label={
+                                    formatNumber(letters[upgradeCosts['slot2'].letter].amount) +
+                                    ' / ' +
+                                    formatNumber(upgradeCosts['slot2'].costs)
+                                }>
+                                <Text
+                                    style={{
+                                        color:
+                                            letters[upgradeCosts['slot2'].letter].amount < upgradeCosts['slot2'].costs ?
+                                                colors.accent1Color : colors.darkGray
+                                    }}
+                                >
+                                    {upgradeCosts['slot2'].letter}
+                                    {letters[upgradeCosts['slot2'].letter].amount > 10000 ?
+                                        changeNumberDisplay(Math.round(
+                                            letters[upgradeCosts['slot2'].letter].amount), suffixes) :
+                                        letters[upgradeCosts['slot2'].letter].amount}/
+                                    {upgradeCosts['slot2'].costs > 10000 ?
+                                        changeNumberDisplay(Math.round(upgradeCosts['slot2'].costs), suffixes) :
+                                        upgradeCosts['slot2'].costs}
+                                </Text>
                             </Tooltip> :
                             <Text></Text>
                     }
@@ -376,8 +442,27 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                     {
                         Object.keys(upgradeCosts).length >= 3 ?
                             <Tooltip
-                                label={formatNumber(letters[upgradeCosts['slot3'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot3'].costs)}>
-                                <Text>{upgradeCosts['slot3'].letter} {letters[upgradeCosts['slot3'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot3'].letter].amount), suffixes) : letters[upgradeCosts['slot3'].letter].amount}/{upgradeCosts['slot3'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot3'].costs), suffixes) : upgradeCosts['slot3'].costs}</Text>
+                                label={
+                                    formatNumber(letters[upgradeCosts['slot3'].letter].amount) +
+                                    ' / ' +
+                                    formatNumber(upgradeCosts['slot3'].costs)
+                                }>
+                                <Text
+                                    style={{
+                                        color:
+                                            letters[upgradeCosts['slot3'].letter].amount < upgradeCosts['slot3'].costs ?
+                                                colors.accent1Color : colors.darkGray
+                                    }}
+                                >
+                                    {upgradeCosts['slot3'].letter}
+                                    {letters[upgradeCosts['slot3'].letter].amount > 10000 ?
+                                        changeNumberDisplay(Math.round(
+                                            letters[upgradeCosts['slot3'].letter].amount), suffixes) :
+                                        letters[upgradeCosts['slot3'].letter].amount}/
+                                    {upgradeCosts['slot3'].costs > 10000 ?
+                                        changeNumberDisplay(Math.round(upgradeCosts['slot3'].costs), suffixes) :
+                                        upgradeCosts['slot3'].costs}
+                                </Text>
                             </Tooltip> :
                             <Text></Text>
                     }
@@ -386,8 +471,27 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                     {
                         Object.keys(upgradeCosts).length >= 4 ?
                             <Tooltip
-                                label={formatNumber(letters[upgradeCosts['slot3'].letter].amount) + ' / ' + formatNumber(upgradeCosts['slot3'].costs)}>
-                                <Text>{upgradeCosts['slot4'].letter} {letters[upgradeCosts['slot4'].letter].amount > 10000 ? changeNumberDisplay(Math.round(letters[upgradeCosts['slot4'].letter].amount), suffixes) : letters[upgradeCosts['slot4'].letter].amount}/{upgradeCosts['slot4'].costs > 10000 ? changeNumberDisplay(Math.round(upgradeCosts['slot4'].costs), suffixes) : upgradeCosts['slot4'].costs}</Text>
+                                label={
+                                    formatNumber(letters[upgradeCosts['slot3'].letter].amount) +
+                                    ' / ' +
+                                    formatNumber(upgradeCosts['slot3'].costs)
+                                }>
+                                <Text
+                                    style={{
+                                        color:
+                                            letters[upgradeCosts['slot4'].letter].amount < upgradeCosts['slot4'].costs ?
+                                                colors.accent1Color : colors.darkGray
+                                    }}
+                                >
+                                    {upgradeCosts['slot4'].letter}
+                                    {letters[upgradeCosts['slot4'].letter].amount > 10000 ?
+                                        changeNumberDisplay(Math.round(
+                                            letters[upgradeCosts['slot4'].letter].amount), suffixes) :
+                                        letters[upgradeCosts['slot4'].letter].amount}/
+                                    {upgradeCosts['slot4'].costs > 10000 ?
+                                        changeNumberDisplay(Math.round(upgradeCosts['slot4'].costs), suffixes) :
+                                        upgradeCosts['slot4'].costs}
+                                </Text>
                             </Tooltip> :
                             <Text></Text>
                     }

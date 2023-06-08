@@ -1,10 +1,6 @@
-- Upgrade Button
-    - Sometimes the Amount of the Letter doesn´t fit into the Space inside the Upgrade Costs
-    - Sometimes Upgradeable is display even if it is not upgradeable
-    - Change Color of Upgrade Costs Slots if Amount is too low or enough
-
-- Miscellaneous
-    - Clean up Code
-    - Make new Stuff
-    - Edit missing Letters
-    - Make the Game more playable
+- Miscellaneous (Urgency)
+    - Edit missing Letters (10)
+    - Make new Stuff (9)
+    - Autobuyer (9)
+    - Make the Game more playable (5)
+    - Clean up Code (2)

@@ -2,10 +2,10 @@ import {Flex, Text, Title} from "@mantine/core";
 import {useAtomValue} from "jotai";
 import {activeLetterAtom} from "../../../atoms/upgradeLetter";
 import {lettersAtom} from "../../../atoms/letters";
-import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 import {suffixesAtom} from "../../../atoms/suffixes";
 import UpgradeButton from "./upgradeButton";
 import formatNumber from "../../../functions/formatNumber";
+import changeNumberDisplay from "../../../functions/changeNumberDisplay";
 
 export default function Upgrades() {
     const activeLetter = useAtomValue(activeLetterAtom)
@@ -46,11 +46,15 @@ export default function Upgrades() {
                             </Title>
                             <Text>
                                 {
-                                    letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed) > 999999
+                                    Math.round(
+                                        letters[activeLetter].productionRate
+                                        * (1 / letters[activeLetter].productionSpeed)) > 999999
                                         ?
-                                        changeNumberDisplay(letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed), suffixes)
+                                        changeNumberDisplay(Math.round(letters[activeLetter].productionRate
+                                            * (1 / letters[activeLetter].productionSpeed)), suffixes)
                                         :
-                                        formatNumber(letters[activeLetter].productionRate * (1 / letters[activeLetter].productionSpeed))
+                                        formatNumber(letters[activeLetter].productionRate
+                                            * (1 / letters[activeLetter].productionSpeed))
                                 } Letters / Second
                             </Text>
                             <UpgradeButton upgrade="Increase Production Speed" letter={activeLetter}/>

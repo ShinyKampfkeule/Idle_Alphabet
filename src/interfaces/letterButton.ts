@@ -22,11 +22,13 @@ interface LetterInterface {
 }
 
 export interface LetterUpgradeInterface {
-    [key: number]: {
-        costsGrowthRate: number,
-        functionalityGrowthRate: number,
-        upgradeSlots?: UpgradeSlotsInterface
-    }
+    [key: number]: SingleUpgradeInterface
+}
+
+export interface SingleUpgradeInterface {
+    costsGrowthRate: number,
+    functionalityGrowthRate: number,
+    upgradeSlots?: UpgradeSlotsInterface
 }
 
 export interface UpgradeCostsInterface {
