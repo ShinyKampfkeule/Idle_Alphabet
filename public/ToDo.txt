@@ -1,6 +1,13 @@
 - Miscellaneous (Urgency)
-    - Edit missing Letters (10)
+    - Show Progress Bar for Time of Letter Production (10)
+    - Implement Prestige System (9)
     - Make new Stuff (9)
     - Autobuyer (9)
     - Make the Game more playable (5)
+    - Balance Letters (5)
     - Clean up Code (2)
+
+- Prestige System
+    - Points for x-Amount of Letters (for example 1.000.000 As is first Prestige Point)
+    - Prestige Points can be used to buy Letter Upgrades for individual Letters (faster base Time, higher base Income)
+    - Perhaps implement a Prestige Skill Tree of some sort
