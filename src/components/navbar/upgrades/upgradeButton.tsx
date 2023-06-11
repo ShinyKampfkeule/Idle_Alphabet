@@ -31,14 +31,20 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
         let currentLevel = 0
         let nextLevel = 0
         let currentLevelCap: {
-            costsGrowthRate: number;
-            functionalityGrowthRate: number;
-            upgradeSlots?: UpgradeSlotsInterface;
+            cap: number,
+            upgradeData: {
+                costsGrowthRate: number;
+                functionalityGrowthRate: number;
+                upgradeSlots?: UpgradeSlotsInterface;
+            }
         } | undefined = undefined
         let nextLevelCap: {
-            costsGrowthRate: number;
-            functionalityGrowthRate: number;
-            upgradeSlots?: UpgradeSlotsInterface;
+            cap: number,
+            upgradeData: {
+                costsGrowthRate: number;
+                functionalityGrowthRate: number;
+                upgradeSlots?: UpgradeSlotsInterface;
+            }
         } | undefined = undefined
         const currentLetterData = updatedLetters[letter]
         switch (upgrade) {
@@ -49,14 +55,14 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 nextLevelCap = findLevelCap(nextLevel, currentLetterData.productionSpeedUpgrades)
                 currentLetterData.productionSpeedLevel = nextLevel
                 if (nextLevelCap && currentLevelCap) {
-                    if (nextLevelCap.costsGrowthRate !== currentLevelCap.costsGrowthRate) {
+                    if (nextLevelCap.upgradeData.costsGrowthRate !== currentLevelCap.upgradeData.costsGrowthRate) {
                         currentLetterData.productionInitSpeed = currentLetterData.productionSpeed
-                        if (currentLevelCap.upgradeSlots) {
-                            Object.keys(currentLevelCap.upgradeSlots).map((key) => {
+                        if (currentLevelCap.upgradeData.upgradeSlots) {
+                            Object.keys(currentLevelCap.upgradeData.upgradeSlots).map((key) => {
                                 if (currentLevelCap) {
                                     currentLetterData.productionSpeedInitialCosts[key] =
                                         calculateIncreasingGrowth(
-                                            currentLevelCap.costsGrowthRate,
+                                            currentLevelCap.upgradeData.costsGrowthRate,
                                             currentLetterData.productionSpeedInitialCosts[key],
                                             currentLevel
                                         )
@@ -65,18 +71,18 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                         }
                     }
                     currentLetterData.productionSpeed = calculateDecreasingGrowth(
-                        nextLevelCap.functionalityGrowthRate, currentLetterData.productionInitSpeed, currentLevel
+                        nextLevelCap.upgradeData.functionalityGrowthRate, currentLetterData.productionInitSpeed, nextLevel
                     )
-                    if (nextLevelCap.upgradeSlots && nextLevelCap.costsGrowthRate) {
-                        Object.keys(nextLevelCap.upgradeSlots).map((key) => {
-                            if (nextLevelCap && nextLevelCap.upgradeSlots) {
-                                updatedLetters[nextLevelCap.upgradeSlots[key]].amount =
+                    if (nextLevelCap.upgradeData.upgradeSlots && nextLevelCap.upgradeData.costsGrowthRate) {
+                        Object.keys(nextLevelCap.upgradeData.upgradeSlots).map((key) => {
+                            if (nextLevelCap && nextLevelCap.upgradeData.upgradeSlots) {
+                                updatedLetters[nextLevelCap.upgradeData.upgradeSlots[key]].amount =
                                     Number((
-                                        updatedLetters[nextLevelCap.upgradeSlots[key]].amount -
+                                        updatedLetters[nextLevelCap.upgradeData.upgradeSlots[key]].amount -
                                         calculateIncreasingGrowth(
-                                            nextLevelCap.costsGrowthRate,
+                                            nextLevelCap.upgradeData.costsGrowthRate,
                                             currentLetterData.productionSpeedInitialCosts[key],
-                                            nextLevel
+                                            currentLevel
                                         )).toFixed(2)
                                     )
                             }
@@ -91,35 +97,45 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 nextLevelCap = findLevelCap(nextLevel, currentLetterData.productionRateUpgrades)
                 currentLetterData.productionRateLevel = nextLevel
                 if (nextLevelCap && currentLevelCap) {
-                    if (nextLevelCap.costsGrowthRate !== currentLevelCap.costsGrowthRate) {
+                    if (currentLevelCap.cap !== currentLevel && nextLevelCap.upgradeData.costsGrowthRate !== currentLevelCap.upgradeData.costsGrowthRate) {
                         currentLetterData.productionInitRate = currentLetterData.productionRate
-                        if (currentLevelCap.upgradeSlots) {
-                            Object.keys(currentLevelCap.upgradeSlots).map((key) => {
+                        if (currentLevelCap.upgradeData.upgradeSlots) {
+                            Object.keys(currentLevelCap.upgradeData.upgradeSlots).map((key) => {
                                 if (currentLevelCap) {
                                     currentLetterData.productionRateInitialCosts[key] =
                                         calculateIncreasingGrowth(
-                                            currentLevelCap.costsGrowthRate,
+                                            currentLevelCap.upgradeData.costsGrowthRate,
                                             currentLetterData.productionRateInitialCosts[key],
                                             currentLevel
                                         )
+                                    updatedLetters[letter].productionRateInitialCosts[key] = currentLetterData.productionRateInitialCosts[key]
                                 }
                             })
                         }
                     }
+                    let initialProductionRate = currentLetterData.productionInitRate
+                    if (nextLevelCap.cap !== currentLevelCap.cap) {
+                        initialProductionRate = calculateIncreasingGrowth(
+                            currentLevelCap.upgradeData.functionalityGrowthRate,
+                            initialProductionRate,
+                            currentLevel
+                        )
+                    }
+                    updatedLetters[letter].productionInitRate = initialProductionRate
                     currentLetterData.productionRate = calculateIncreasingGrowth(
-                        nextLevelCap.functionalityGrowthRate,
-                        currentLetterData.productionInitRate,
-                        currentLevel
+                        nextLevelCap.upgradeData.functionalityGrowthRate,
+                        initialProductionRate,
+                        nextLevel
                     )
-                    if (nextLevelCap.upgradeSlots && nextLevelCap.costsGrowthRate) {
-                        Object.keys(nextLevelCap.upgradeSlots).map((key) => {
-                            if (nextLevelCap && nextLevelCap.upgradeSlots) {
-                                updatedLetters[nextLevelCap.upgradeSlots[key]].amount =
-                                    Number((updatedLetters[nextLevelCap.upgradeSlots[key]].amount -
+                    if (nextLevelCap.upgradeData.upgradeSlots && nextLevelCap.upgradeData.costsGrowthRate) {
+                        Object.keys(nextLevelCap.upgradeData.upgradeSlots).map((key) => {
+                            if (nextLevelCap && nextLevelCap.upgradeData.upgradeSlots) {
+                                updatedLetters[nextLevelCap.upgradeData.upgradeSlots[key]].amount =
+                                    Number((updatedLetters[nextLevelCap.upgradeData.upgradeSlots[key]].amount -
                                         calculateIncreasingGrowth(
-                                            nextLevelCap.costsGrowthRate,
+                                            nextLevelCap.upgradeData.costsGrowthRate,
                                             currentLetterData.productionRateInitialCosts[key],
-                                            nextLevel
+                                            currentLevel
                                         )).toFixed(2)
                                     )
                             }
@@ -165,11 +181,11 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
         switch (upgrade) {
             case 'Increase Production Speed':
                 setCurrentRate(`${letters[letter].productionSpeed} sec`)
-                if (levelCapSpeed && levelCapSpeed.upgradeSlots) {
+                if (levelCapSpeed && levelCapSpeed.upgradeData.upgradeSlots) {
                     if (currentLevelCapSpeed && levelCapSpeed) {
-                        if (currentLevelCapSpeed.costsGrowthRate !== levelCapSpeed.costsGrowthRate) {
+                        if (currentLevelCapSpeed.upgradeData.costsGrowthRate !== levelCapSpeed.upgradeData.costsGrowthRate) {
                             initialRate = calculateDecreasingGrowth(
-                                currentLevelCapSpeed.functionalityGrowthRate,
+                                currentLevelCapSpeed.upgradeData.functionalityGrowthRate,
                                 letters[letter].productionInitSpeed,
                                 letters[letter].productionSpeedLevel
                             )
@@ -179,13 +195,13 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                     }
                     setNextRate(
                         `${calculateDecreasingGrowth(
-                            levelCapSpeed.functionalityGrowthRate,
+                            levelCapSpeed.upgradeData.functionalityGrowthRate,
                             initialRate,
-                            letters[letter].productionSpeedLevel
+                            letters[letter].productionSpeedLevel + 1
                         )} sec`
                     )
-                    Object.keys(levelCapSpeed.upgradeSlots).map((key) => {
-                        if (levelCapSpeed && levelCapSpeed.upgradeSlots) {
+                    Object.keys(levelCapSpeed.upgradeData.upgradeSlots).map((key) => {
+                        if (levelCapSpeed && levelCapSpeed.upgradeData.upgradeSlots) {
                             if (!Object.keys(newUpgradeCosts).includes(key)) {
                                 newUpgradeCosts[key] = {
                                     costs: 0,
@@ -193,22 +209,22 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                                 }
                             }
                             if (currentLevelCapSpeed && levelCapSpeed) {
-                                if (currentLevelCapSpeed.costsGrowthRate !== levelCapSpeed.costsGrowthRate) {
+                                if (currentLevelCapSpeed.upgradeData.costsGrowthRate !== levelCapSpeed.upgradeData.costsGrowthRate) {
                                     initalCosts = calculateIncreasingGrowth(
-                                        currentLevelCapSpeed.costsGrowthRate,
+                                        currentLevelCapSpeed.upgradeData.costsGrowthRate,
                                         letters[letter].productionSpeedInitialCosts[key],
-                                        letters[letter].productionSpeedLevel
+                                        letters[letter].productionSpeedLevel - 1
                                     )
                                 } else {
                                     initalCosts = letters[letter].productionSpeedInitialCosts[key]
                                 }
                             }
                             newUpgradeCosts[key].costs = calculateIncreasingGrowth(
-                                levelCapSpeed.costsGrowthRate,
+                                levelCapSpeed.upgradeData.costsGrowthRate,
                                 initalCosts,
-                                letters[letter].productionSpeedLevel + 1
+                                letters[letter].productionSpeedLevel
                             )
-                            newUpgradeCosts[key].letter = levelCapSpeed.upgradeSlots[key]
+                            newUpgradeCosts[key].letter = levelCapSpeed.upgradeData.upgradeSlots[key]
                         }
                     })
                     setUpgradeCosts(newUpgradeCosts)
@@ -216,13 +232,13 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                 break
             case 'Increase Production Rate':
                 setCurrentRate(`${letters[letter].productionRate}`)
-                if (levelCapRate && levelCapRate.upgradeSlots) {
+                if (levelCapRate && levelCapRate.upgradeData.upgradeSlots) {
                     if (currentLevelCapRate && levelCapRate) {
-                        if (currentLevelCapRate.costsGrowthRate !== levelCapRate.costsGrowthRate) {
+                        if (currentLevelCapRate.upgradeData.costsGrowthRate !== levelCapRate.upgradeData.costsGrowthRate) {
                             initialRate = calculateIncreasingGrowth(
-                                currentLevelCapRate.functionalityGrowthRate,
+                                currentLevelCapRate.upgradeData.functionalityGrowthRate,
                                 letters[letter].productionInitRate,
-                                letters[letter].productionRateLevel - 1
+                                letters[letter].productionRateLevel
                             )
                         } else {
                             initialRate = letters[letter].productionInitRate
@@ -230,13 +246,13 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                     }
                     setNextRate(
                         `${calculateIncreasingGrowth(
-                            levelCapRate.functionalityGrowthRate,
+                            levelCapRate.upgradeData.functionalityGrowthRate,
                             initialRate,
-                            letters[letter].productionRateLevel
+                            letters[letter].productionRateLevel + 1
                         )}`
                     )
-                    Object.keys(levelCapRate.upgradeSlots).map((key) => {
-                        if (levelCapRate && levelCapRate.upgradeSlots) {
+                    Object.keys(levelCapRate.upgradeData.upgradeSlots).map((key) => {
+                        if (levelCapRate && levelCapRate.upgradeData.upgradeSlots) {
                             if (!Object.keys(newUpgradeCosts).includes(key)) {
                                 newUpgradeCosts[key] = {
                                     costs: 0,
@@ -244,22 +260,22 @@ export default function UpgradeButton({upgrade, letter}: UpgradeButtonInterface)
                                 }
                             }
                             if (currentLevelCapRate && levelCapRate) {
-                                if (currentLevelCapRate.costsGrowthRate !== levelCapRate.costsGrowthRate) {
+                                if (currentLevelCapRate.cap === letters[letter].productionRateLevel && currentLevelCapRate.upgradeData.costsGrowthRate !== levelCapRate.upgradeData.costsGrowthRate) {
                                     initalCosts = calculateIncreasingGrowth(
-                                        currentLevelCapRate.costsGrowthRate,
+                                        currentLevelCapRate.upgradeData.costsGrowthRate,
                                         letters[letter].productionRateInitialCosts[key],
-                                        letters[letter].productionRateLevel
+                                        letters[letter].productionRateLevel - 1
                                     )
                                 } else {
                                     initalCosts = letters[letter].productionRateInitialCosts[key]
                                 }
                             }
                             newUpgradeCosts[key].costs = calculateIncreasingGrowth(
-                                levelCapRate.costsGrowthRate,
+                                levelCapRate.upgradeData.costsGrowthRate,
                                 initalCosts,
-                                letters[letter].productionRateLevel + 1
+                                letters[letter].productionRateLevel
                             )
-                            newUpgradeCosts[key].letter = levelCapRate.upgradeSlots[key]
+                            newUpgradeCosts[key].letter = levelCapRate.upgradeData.upgradeSlots[key]
                         }
                     })
                     setUpgradeCosts(newUpgradeCosts)

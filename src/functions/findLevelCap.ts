@@ -8,6 +8,9 @@ export default function findLevelCap(level: number, letterUpgradeLevels: LetterU
 
     if (result) {
         const capInteger = parseInt(result)
-        return letterUpgradeLevels[capInteger]
+        return {
+            cap: capInteger,
+            upgradeData: letterUpgradeLevels[capInteger]
+        }
     }
 }

@@ -97,6 +97,17 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
             h={152}
             justify="flex-end"
         >
+            {/*<Progress*/}
+            {/*    size="sm"*/}
+            {/*    value={progressBarValue}*/}
+            {/*    h="100%"*/}
+            {/*    w="100%"*/}
+            {/*    sx={{*/}
+            {/*        zIndex: 0,*/}
+            {/*        bottom: 0,*/}
+            {/*        position: "absolute"*/}
+            {/*    }}*/}
+            {/*/>*/}
             <Tooltip label="Upgrades">
                 <ActionIcon
                     variant="filled"
@@ -129,7 +140,6 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
             <Button
                 w={152}
                 h={152}
-                // className={isIntervalRunning ? classes.animatedButton + ' active' : classes.animatedButton}
                 sx={{
                     position: "absolute",
                     backgroundColor: colors.mainColor,
@@ -150,14 +160,21 @@ export default function ActiveButton({letter}: LetterButtonLetterInterface) {
                     justify="center"
                     align="center"
                     gap={3}
+                    h="100%"
                 >
                     <Text
                         size="4rem"
+                        style={{
+                            zIndex: 1
+                        }}
                     >
                         {letter}
                     </Text>
                     <Text
                         size="1.2rem"
+                        style={{
+                            zIndex: 1
+                        }}
                     >
                         {
                             letters[letter].amount > 9999 ?
@@ -181,8 +198,8 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     const productionSpeedLevelCapCurrent = findLevelCap(productionSpeedLevelCurrent, letters[letter].productionSpeedUpgrades)
     if (productionRateLevelCap && productionRateLevelCapCurrent && !buyable) {
         buyable = checkIfSingleUpgradeBuyable(
-            productionRateLevelCap,
-            productionRateLevelCapCurrent,
+            productionRateLevelCap.upgradeData,
+            productionRateLevelCapCurrent.upgradeData,
             letters[letter].productionRateInitialCosts,
             productionRateLevelCurrent,
             letters
@@ -190,8 +207,8 @@ function checkIfUpgradeBuyable(letters: LetterButtonInterface, letter: string) {
     }
     if (productionSpeedLevelCap && productionSpeedLevelCapCurrent && !buyable) {
         buyable = checkIfSingleUpgradeBuyable(
-            productionSpeedLevelCap,
-            productionSpeedLevelCapCurrent,
+            productionSpeedLevelCap.upgradeData,
+            productionSpeedLevelCapCurrent.upgradeData,
             letters[letter].productionSpeedInitialCosts,
             productionSpeedLevelCurrent,
             letters

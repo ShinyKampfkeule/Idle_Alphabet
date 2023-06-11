@@ -5,7 +5,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
     'A': {
         unlocked: true,
         bought: false,
-        amount: 0,
+        amount: 1000000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
@@ -181,7 +181,7 @@ export const lettersAtom = atom<LetterButtonInterface>({
         buyingCosts: {
             "A": 500
         },
-        amount: 0,
+        amount: 1000000000,
         productionRate: 1,
         productionInitRate: 1,
         productionRateLevel: 0,
